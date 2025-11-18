@@ -4,99 +4,77 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- CSRF Token -->
+ 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Fonts -->
+ 
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
-    <!-- Scripts -->
+  
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-dark shadow-sm" style="background-color: #96A78D;">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                <a class="navbar-brand fw-bold text-white" href="{{ url('/') }}">
+                    Citas Médicas Rurales
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
+                    
+                    <!-- Izquierda -->
                     <ul class="navbar-nav me-auto">
-
                         @auth
                             @if(auth()->user()->rol === 'paciente')
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('paciente.inicio') }}">Mis citas</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Buscar médicos</a>
-                                </li>
+                                <li><a class="nav-link text-white" href="{{ route('paciente.inicio') }}">Mis citas</a></li>
+                                <li><a class="nav-link text-white" href="#">Buscar médicos</a></li>
                             @elseif(auth()->user()->rol === 'medico')
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('medico.inicio') }}">Agenda de hoy</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Mis pacientes</a>
-                                </li>
+                                <li><a class="nav-link text-white" href="{{ route('medico.inicio') }}">Agenda de hoy</a></li>
                             @elseif(auth()->user()->rol === 'centro')
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('centro.inicio') }}">Panel del centro</a>
-                                </li>
+                                <li><a class="nav-link text-white" href="{{ route('centro.inicio') }}">Panel del centro</a></li>
                             @elseif(auth()->user()->rol === 'admin')
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('admin.inicio') }}">Panel admin</a>
-                                </li>
+                                <li><a class="nav-link text-white" href="{{ route('admin.inicio') }}">Panel admin</a></li>
                             @endif
                         @endauth
-
                     </ul>
 
-                    <!-- Right Side Of Navbar -->
+                    <!-- Derecha -->
                     <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
                         @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
-
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
+                            <li><a class="nav-link text-white" href="{{ route('login') }}"></a></li>
+                            <li><a class="nav-link text-white" href="{{ route('register') }}"></a></li>
                         @else
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                                <a class="nav-link dropdown-toggle text-white fw-bold" href="#" data-bs-toggle="dropdown">
+                                    {{ Auth::user()->name }} ({{ Auth::user()->rol }})
                                 </a>
-
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <a class="dropdown-item"
+                                    href="{{ route('logout') }}"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        Cerrar sesión
                                     </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    <form id="logout-form" method="POST" action="{{ route('logout') }}" class="d-none">
                                         @csrf
                                     </form>
                                 </div>
                             </li>
                         @endguest
                     </ul>
+
                 </div>
             </div>
         </nav>
+
+
 
         <main class="py-4">
             @yield('content')
