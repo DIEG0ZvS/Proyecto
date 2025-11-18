@@ -7,7 +7,7 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+<!-- ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
@@ -56,4 +56,150 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT). -->
+
+
+# Plataforma de Citas Médicas para Zonas Rurales
+
+Proyecto desarrollado en Laravel 12 con roles y autenticación para gestionar pacientes, médicos, centros de salud y administradores.
+
+## 1. Descripción del proyecto
+
+Este sistema permite la gestión de citas médicas en zonas rurales mediante una plataforma web accesible para diferentes tipos de usuarios.
+
+El proyecto incluye:
+
+- Sistema de autenticación (Login / Register) usando Laravel UI
+
+- Roles de usuario: paciente, médico, centro de salud, administrador
+
+- Navegación dinámica según el rol
+
+- Formularios y vistas sin conexión real a BD todavía
+
+- Branding con paleta verde suave
+
+- Estructura base para implementaciones futuras
+
+## 2. Tecnologías utilizadas
+
+- Laravel 12
+
+- Laravel/UI (Bootstrap + Auth)
+
+- PHP 8.3
+
+- MySQL (Laragon)
+
+- Bootstrap 5
+
+- Vite (JS + SCSS)
+
+- Blade Templates
+
+## 3. Instalación del proyecto
+### Clonar repositorio
+
+git clone https://github.com/yorbiiii/citas-medicas-rurales.git
+cd citas-medicas-rurales
+
+### Instalar dependencias de PHP
+composer install
+
+### Instalar dependencias de Node
+npm install
+
+### Crear archivo .env
+cp .env.example .env
+
+
+Configurar la base de datos:
+
+DB_DATABASE=citas_medicas_rurales
+DB_USERNAME=root
+DB_PASSWORD=
+
+### Generar llave del proyecto
+php artisan key:generate
+
+### Ejecutar migraciones
+php artisan migrate
+
+### Compilar estilos
+npm run dev
+
+### Iniciar servidor Laravel
+php artisan serve
+
+
+La aplicación estará disponible en:
+
+http://127.0.0.1:8000
+
+## 4. Roles del sistema
+
+- Paciente
+
+- Médico
+
+- Centro de Salud
+
+- Administrador
+
+Cada rol tiene su propio panel:
+
+Rol         Ruta
+Paciente	/paciente
+Médico	    /medico
+Centro	    /centro
+Admin	    /admin
+
+## 5. Navegación según tipo de usuario
+
+Implementado en layouts/app.blade.php.
+
+Rol	        Menú visible
+Paciente	Mis citas, Buscar médicos
+Médico	    Agenda de hoy
+Centro	    Panel del centro
+Admin	    Panel admin
+
+## 6. Branding inicial (colores)
+
+Aplicado a:
+
+Navbar
+
+Login
+
+Register
+
+Dashboard de cada rol
+
+Paleta usada:
+Nombre	    Color
+Verde       principal	#96A78D
+Verde       pastel	#B6CEB4
+Verde       claro	#D9E9CF
+Fondo       claro	#FFFFFF
+
+## 7. Estado actual del avance (según el docente)
+Requisito solicitado	                        Estado
+Autenticación Laravel/UI	-                   Hecho
+Vistas sin BD (solo formularios/tablas)	-       Hecho
+Navegación por tipo de usuario	-               Hecho
+Roles y redirecciones	-                       Hecho
+Branding inicial	-                           Hecho
+Subido a GitHub	-                               Hecho
+
+## 8. Integrantes del proyecto (editar)
+
+Durand Clemente Yohorbi
+
+Mendoza Ospino Yuleymir
+
+Zevallos Salas Diego
+
+## 9. Licencia
+
+Proyecto académico desarrollado para fines educativos – Universidad de Huánuco (UDH).
