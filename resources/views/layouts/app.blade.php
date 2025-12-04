@@ -36,15 +36,15 @@
                         @if(Auth::check())
 
                             @if(Auth::user()->role == 'medico')
-                                @include('menus.menu_medico')
+                                @include('menu.menu_medico')
                             @endif
 
                             @if(Auth::user()->role == 'paciente')
-                                @include('menus.menu_paciente')
+                                @include('menu.menu_paciente')
                             @endif
 
                             @if(Auth::user()->role == 'admin')
-                                @include('menus.menu_admin')
+                                @include('menu.menu_admin')
                             @endif
 
                         @endif

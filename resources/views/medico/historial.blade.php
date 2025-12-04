@@ -15,9 +15,9 @@
         <tbody>
             @foreach($historial as $h)
             <tr>
-                <td>{{ $h['paciente'] }}</td>
-                <td>{{ $h['fecha'] }}</td>
-                <td>{{ $h['diagnostico'] }}</td>
+                <td>{{ $h->paciente->user->name ?? ($h->paciente->user->email ?? '—') }}</td>
+                <td>{{ \Carbon\Carbon::parse($h->fecha_hora)->format('Y-m-d H:i') }}</td>
+                <td>{{ $h->diagnostico ?? '—' }}</td>
             </tr>
             @endforeach
         </tbody>

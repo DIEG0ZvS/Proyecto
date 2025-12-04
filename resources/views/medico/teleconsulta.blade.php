@@ -11,7 +11,7 @@
 
     <div class="text-center">
         <button class="btn btn-primary">Encender cámara</button>
-        <button class="btn btn-danger">Finalizar consulta</button>
+        <a href="{{ route('medico.citas.finalizar', $id) }}" class="btn btn-danger">Finalizar consulta</a>
     </div>
 </div>
 @endsection

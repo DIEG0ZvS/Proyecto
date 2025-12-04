@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('centros', function (Blueprint $table) {
-            $table->id();
-            $table->string('nombre');
-            $table->string('direccion');
-            $table->timestamps();
+        Schema::table('citas', function (Blueprint $table) {
+            $table->text('diagnostico')->nullable()->after('estado');
         });
     }
 
@@ -24,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('centros');
+        Schema::table('citas', function (Blueprint $table) {
+            $table->dropColumn('diagnostico');
+        });
     }
 };

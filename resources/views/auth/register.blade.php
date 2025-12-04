@@ -35,7 +35,6 @@
                             <option value="paciente">Paciente</option>
                             <option value="medico">Médico</option>
                             <option value="centro">Centro de salud</option>
-                            <option value="admin">Administrador</option>
                         </select>
                     </div>
 

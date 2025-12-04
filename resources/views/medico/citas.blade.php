@@ -16,11 +16,11 @@
         <tbody>
             @foreach($citas as $c)
             <tr>
-                <td>{{ $c['paciente'] }}</td>
-                <td>{{ $c['hora'] }}</td>
-                <td>{{ $c['estado'] }}</td>
+                <td>{{ $c->paciente->user->name ?? ($c->paciente->user->email ?? '—') }}</td>
+                <td>{{ \Carbon\Carbon::parse($c->fecha_hora)->format('H:i') }}</td>
+                <td>{{ $c->estado }}</td>
                 <td>
-                    <a href="{{ route('medico.teleconsulta', 1) }}" class="btn btn-primary">Iniciar</a>
+                    <a href="{{ route('medico.teleconsulta', $c->id) }}" class="btn btn-primary">Iniciar</a>
                 </td>
             </tr>
             @endforeach

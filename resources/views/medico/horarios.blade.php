@@ -16,8 +16,8 @@
             @foreach($horarios as $h)
             <tr>
                 <td>{{ $h['dia'] }}</td>
-                <td>{{ $h['inicio'] }}</td>
-                <td>{{ $h['fin'] }}</td>
+                <td>{{ $h['hora_inicio'] }}</td>
+                <td>{{ $h['hora_fin'] }}</td>
             </tr>
             @endforeach
         </tbody>

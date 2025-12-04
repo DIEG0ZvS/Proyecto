@@ -49,7 +49,7 @@ class User extends Authenticatable
 
     public function medico()
     {
-        return $this->hasOne(Medico::class);
+        return $this->hasOne(Medico::class, 'user_id');
     }
 
     public function paciente()

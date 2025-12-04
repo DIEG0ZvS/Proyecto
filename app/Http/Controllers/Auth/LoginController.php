@@ -34,9 +34,9 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->validate([
+        $request->validate([
             'email' => 'required|email',
-            'password' => 'required'
+            'password' => 'required',
         ]);
 
         $user = User::where('email', $request->email)->first();
@@ -45,19 +45,24 @@ class LoginController extends Controller
             return back()->with('error', 'Credenciales incorrectas');
         }
 
-        // Guardar sesión
-        auth()->login($user);
-
-        // Redireccionar por rol
+        // Aquí es donde empieza a fallar si la lógica es incorrecta.
         if ($user->role == 'medico') {
-            return redirect('/medico/dashboard');
+            auth()->login($user);
+            return redirect()->route('medico.inicio'); // Ruta a /medico/dashboard
+        } elseif ($user->role == 'paciente') {
+            auth()->login($user);
+            return redirect()->route('paciente.inicio');
+        } elseif ($user->role == 'admin') {
+            auth()->login($user);
+            return redirect()->route('admin.inicio');
+        } elseif ($user->role == 'centro') {
+            auth()->login($user);
+            return redirect()->route('centro.inicio');
         }
 
-        if ($user->role == 'paciente') {
-            return redirect('/paciente/dashboard');
-        }
-
-        return redirect('/admin/dashboard');
+        // Caso de seguridad: si tiene un rol desconocido, redirige a home
+        auth()->login($user);
+        return redirect('/home');
     }
 
 }

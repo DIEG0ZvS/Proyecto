@@ -17,14 +17,18 @@ return new class extends Migration
             $table->string('ubicacion');
             $table->string('telefono')->nullable();
             
+            // Claves foráneas (fusionadas y corregidas):
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            
+            // CORRECCIÓN CRUCIAL: 'specialties' a 'especialidades'
+            $table->foreignId('especialidad_id')->constrained('especialidades')->onDelete('cascade'); 
+            
+            // CORRECCIÓN PROBABLE: 'health_centers' a 'centros' (basado en el nombre de tu archivo create_centros_table.php)
+            $table->foreignId('centro_salud_id')->nullable()->constrained('centros')->onDelete('set null');
+
             $table->timestamps();
         });
 
-        Schema::table('medicos', function (Blueprint $table) {
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('specialty_id')->constrained('specialties')->onDelete('cascade');
-            $table->foreignId('health_center_id')->nullable()->constrained('health_centers')->onDelete('set null');
-        });
     }
 
     /**

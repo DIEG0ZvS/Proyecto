@@ -16,11 +16,8 @@ return new class extends Migration
             $table->string('dia');
             $table->time('hora_inicio');
             $table->time('hora_fin');
+            $table->foreignId('medico_id')->constrained('medicos')->onDelete('cascade');
             $table->timestamps();
-        });
-
-        Schema::create('horarios', function (Blueprint $table) {
-            $table->foreignId('doctor_id')->constrained('doctors')->onDelete('cascade');
         });
     }
 

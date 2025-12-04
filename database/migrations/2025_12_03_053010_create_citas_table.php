@@ -16,13 +16,14 @@ return new class extends Migration
             $table->dateTime('fecha_hora');
             $table->string('tipo')->default('presencial');
             $table->enum('estado', ['pendiente', 'confirmada', 'cancelada', 'completada'])->default('pendiente');
+
+            // CORRECCIÓN: Claves foráneas referenciando a las tablas en español.
+            $table->foreignId('paciente_id')->constrained('pacientes')->onDelete('cascade');
+            $table->foreignId('medico_id')->constrained('medicos')->onDelete('cascade');
+
             $table->timestamps();
         });
 
-        Schema::create('citas', function (Blueprint $table) {
-            $table->foreignId('patient_id')->constrained('patients')->onDelete('cascade');
-            $table->foreignId('doctor_id')->constrained('doctors')->onDelete('cascade');
-        });
     }
 
     /**

@@ -24,13 +24,13 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // grupos
-
 Route::middleware('auth')->group(function () {
 
     Route::get('/paciente', [PacienteController::class, 'index'])
         ->name('paciente.inicio');
 
-    Route::get('/medico', [MedicoController::class, 'index'])
+    // CORRECCIÓN: Apunta a dashboard en lugar de index, ya que index no existe en MedicoController
+    Route::get('/medico', [MedicoController::class, 'dashboard']) 
         ->name('medico.inicio');
 
     Route::get('/centro', [CentroController::class, 'index'])
@@ -49,6 +49,7 @@ Route::middleware('auth')->group(function () {
 //medico
 Route::middleware(['auth'])->group(function () {
     
+    // Esta ruta ya apunta a dashboard, pero la dejamos para consistencia si es usada en links
     Route::get('/medico/dashboard', [MedicoController::class, 'dashboard'])
         ->name('medico.dashboard');
 
@@ -66,5 +67,12 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/medico/teleconsulta/{id}', [MedicoController::class, 'teleconsulta'])
         ->name('medico.teleconsulta');
+
+    // Finalizar consulta: mostrar formulario y guardar diagnóstico
+    Route::get('/medico/citas/{id}/finalizar', [MedicoController::class, 'finalizarForm'])
+        ->name('medico.citas.finalizar');
+
+    Route::post('/medico/citas/{id}/finalizar', [MedicoController::class, 'finalizarStore'])
+        ->name('medico.citas.finalizar.store');
 
 });
