@@ -29,7 +29,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/paciente', [PacienteController::class, 'index'])
         ->name('paciente.inicio');
 
-    // CORRECCIÓN: Apunta a dashboard en lugar de index, ya que index no existe en MedicoController
     Route::get('/medico', [MedicoController::class, 'dashboard']) 
         ->name('medico.inicio');
 
@@ -49,9 +48,6 @@ Route::middleware('auth')->group(function () {
 //medico
 Route::middleware(['auth'])->group(function () {
     
-    // Esta ruta ya apunta a dashboard, pero la dejamos para consistencia si es usada en links
-    Route::get('/medico/dashboard', [MedicoController::class, 'dashboard'])
-        ->name('medico.dashboard');
 
     Route::get('/medico/citas', [MedicoController::class, 'citasDelDia'])
         ->name('medico.citas');

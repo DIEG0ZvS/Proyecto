@@ -6,7 +6,7 @@
 
     <div class="row mt-4">
         <div class="col-md-4">
-            <a href="{{ route('medico.citas') }}" class="btn btn-primary w-100">Citas del día</a>
+            <a href="{{ route('medico.citas') }}" class="btn btn-success w-100">Citas del día</a>
         </div>
 
         <div class="col-md-4">
@@ -14,7 +14,7 @@
         </div>
 
         <div class="col-md-4">
-            <a href="{{ route('medico.historial') }}" class="btn btn-secondary w-100">Historial de pacientes</a>
+            <a href="{{ route('medico.historial') }}" class="btn btn-success w-100">Historial de pacientes</a>
         </div>
     </div>
 </div>
