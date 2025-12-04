@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -30,19 +32,32 @@ class LoginController extends Controller
 
     // Redireccion
 
-    protected function authenticated(Request $request, $user)
+    public function login(Request $request)
     {
-        switch ($user->rol) {
-            case 'paciente':
-                return redirect()->route('paciente.inicio');
-            case 'medico':
-                return redirect()->route('medico.inicio');
-            case 'centro':
-                return redirect()->route('centro.inicio');
-            case 'admin':
-                return redirect()->route('admin.inicio');
-            default:
-                return redirect('/home');
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            return back()->with('error', 'Credenciales incorrectas');
         }
+
+        // Guardar sesión
+        auth()->login($user);
+
+        // Redireccionar por rol
+        if ($user->role == 'medico') {
+            return redirect('/medico/dashboard');
+        }
+
+        if ($user->role == 'paciente') {
+            return redirect('/paciente/dashboard');
+        }
+
+        return redirect('/admin/dashboard');
     }
+
 }
