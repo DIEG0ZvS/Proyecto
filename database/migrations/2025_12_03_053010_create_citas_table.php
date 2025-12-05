@@ -15,9 +15,7 @@ return new class extends Migration
             $table->id();
             $table->dateTime('fecha_hora');
             $table->string('tipo')->default('presencial');
-            $table->enum('estado', ['pendiente', 'confirmada', 'cancelada', 'completada'])->default('pendiente');
-
-            // CORRECCIÓN: Claves foráneas referenciando a las tablas en español.
+            $table->enum('estado', ['pendiente', 'cancelado', 'completado'])->default('pendiente');
             $table->foreignId('paciente_id')->constrained('pacientes')->onDelete('cascade');
             $table->foreignId('medico_id')->constrained('medicos')->onDelete('cascade');
 

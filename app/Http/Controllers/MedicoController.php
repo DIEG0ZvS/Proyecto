@@ -14,30 +14,16 @@ class MedicoController extends Controller
         return view('medico.dashboard');
     }
 
-    public function citasDelDia()
+    public function citas()
     {
         $medico = Auth::user()->medico;
         $citas = Cita::where('medico_id', $medico->id)
-            ->whereDate('fecha_hora', today())
             ->whereIn('estado', ['pendiente', 'confirmada'])
             ->with(['paciente.user']) 
             ->orderBy('fecha_hora')
             ->get();
 
         return view('medico.citas', compact('citas'));
-    }
-
-    public function historial()
-    {
-        $medico = Auth::user()->medico;
-
-        $historial = Cita::where('medico_id', $medico->id)
-            ->where('estado', 'completada')
-            ->with(['paciente.user'])
-            ->latest('fecha_hora')
-            ->get();
-
-        return view('medico.historial', compact('historial'));
     }
 
     public function horarios()
@@ -101,17 +87,37 @@ class MedicoController extends Controller
         ]);
 
         $medico = Auth::user()->medico;
-
         $cita = Cita::findOrFail($id);
 
         if ($cita->medico_id !== $medico->id) {
             abort(403);
         }
 
-        $cita->diagnostico = $request->input('diagnostico');
+        // 1. CREAR el registro en la nueva tabla 'diagnosticos'
+        $cita->diagnostico()->create([
+            'diagnostico' => $request->input('diagnostico'),
+            'medico_id' => $medico->id, // Guardamos el ID del médico actual
+            'paciente_id' => $cita->paciente_id, // Guardamos el ID del paciente de la cita
+        ]);
+        
+        // 2. Marcar solo el estado de la cita como completada
         $cita->estado = 'completada';
         $cita->save();
 
         return redirect()->route('medico.historial')->with('success', 'Diagnóstico guardado y consulta finalizada.');
+    }
+
+    public function historial()
+    {
+        $medico = Auth::user()->medico;
+
+        $historial = Cita::where('medico_id', $medico->id)
+            ->whereIn('estado', ['completada', 'cancelada'])
+            // Cargar el paciente, su usuario, y el diagnóstico (si existe)
+            ->with(['paciente.user', 'diagnostico']) 
+            ->latest('fecha_hora')
+            ->get();
+
+        return view('medico.historial', compact('historial'));
     }
 }

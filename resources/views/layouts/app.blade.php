@@ -48,18 +48,7 @@
                             @endif
 
                         @endif
-                        @auth
-                                @if(auth()->user()->rol === 'paciente')
-                                <li><a class="nav-link text-white" href="{{ route('paciente.inicio') }}">Mis citas</a></li>
-                                <li><a class="nav-link text-white" href="{{ route('buscar.medicos') }}">Buscar médicos</a></li>
-                            @elseif(auth()->user()->rol === 'medico')
-                                <li><a class="nav-link text-white" href="{{ route('medico.inicio') }}">Agenda de hoy</a></li>
-                            @elseif(auth()->user()->rol === 'centro')
-                                <li><a class="nav-link text-white" href="{{ route('centro.inicio') }}">Panel del centro</a></li>
-                            @elseif(auth()->user()->rol === 'admin')
-                                <li><a class="nav-link text-white" href="{{ route('admin.inicio') }}">Panel admin</a></li>
-                            @endif
-                        @endauth
+                        {{-- los enlaces específicos por rol se cargan desde los partials en 'menu/' --}}
                     </ul>
 
                     <!-- Derecha -->

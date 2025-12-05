@@ -1,9 +1,9 @@
 <li class="nav-item">
-    <a class="nav-link" href="{{ route('medico.dashboard') }}">Dashboard</a>
+    <a class="nav-link" href="{{ route('medico.dashboard') }}">Home</a>
 </li>
 
 <li class="nav-item">
-    <a class="nav-link" href="{{ route('medico.citas') }}">Citas del día</a>
+    <a class="nav-link" href="{{ route('medico.citas') }}">Citas</a>
 </li>
 
 <li class="nav-item">

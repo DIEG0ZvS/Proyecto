@@ -11,13 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pacientes', function (Blueprint $table) {
+        Schema::create('diagnosticos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->date('fecha_nacimiento')->nullable();
+            $table->foreignId('cita_id')->unique()->constrained('citas')->onDelete('cascade');
+            $table->foreignId('medico_id')->constrained('medicos');
+            $table->foreignId('paciente_id')->constrained('pacientes');
+            $table->text('diagnostico');
             $table->timestamps();
         });
-
     }
 
     /**
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pacientes');
+        Schema::dropIfExists('diagnosticos');
     }
 };

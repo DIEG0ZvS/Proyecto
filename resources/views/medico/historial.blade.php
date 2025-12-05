@@ -2,24 +2,50 @@
 
 @section('content')
 <div class="container">
-    <h2>Historial de pacientes</h2>
+    <h2>Historial de Consultas</h2>
 
     <table class="table mt-4">
         <thead>
             <tr>
                 <th>Paciente</th>
-                <th>Fecha</th>
-                <th>Diagnóstico</th>
+                <th>Fecha de Consulta</th>
+                <th>Estado</th>
+                <th>Diagnóstico</th> {{-- Nuevo título de columna --}}
             </tr>
         </thead>
         <tbody>
-            @foreach($historial as $h)
+            @forelse($historial as $cita)
             <tr>
-                <td>{{ $h->paciente->user->name ?? ($h->paciente->user->email ?? '—') }}</td>
-                <td>{{ \Carbon\Carbon::parse($h->fecha_hora)->format('Y-m-d H:i') }}</td>
-                <td>{{ $h->diagnostico ?? '—' }}</td>
+                {{-- Nombre del paciente --}}
+                <td>{{ $cita->paciente->user->name ?? 'Paciente Desconocido' }}</td>
+                
+                {{-- Fecha de la consulta --}}
+                <td>{{ $cita->fecha_hora->format('d/m/Y H:i') }}</td>
+                
+                {{-- Estado con badge --}}
+                <td>
+                    <span class="badge rounded-pill text-white {{ $cita->estado === 'completada' ? 'bg-success' : 'bg-danger' }}">
+                        {{ ucfirst($cita->estado) }}
+                    </span>
+                </td>
+                
+                {{-- Diagnóstico (se accede por la relación) --}}
+                <td>
+                    @if ($cita->estado === 'completada' && $cita->diagnostico)
+                        {{ $cita->diagnostico->diagnostico }}
+                        {{-- La fecha de emisión del diagnóstico es $cita->diagnostico->created_at --}}
+                    @elseif ($cita->estado === 'cancelada')
+                        Cita cancelada.
+                    @else
+                        N/A
+                    @endif
+                </td>
             </tr>
-            @endforeach
+            @empty
+                <tr>
+                    <td colspan="4" class="text-center py-4 text-muted">No hay historial de consultas.</td>
+                </tr>
+            @endforelse
         </tbody>
     </table>
 </div>

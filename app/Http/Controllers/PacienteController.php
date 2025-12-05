@@ -48,7 +48,7 @@ class PacienteController extends Controller
             'medico_id' => 'required|exists:medicos,id',
             'fecha' => 'required|date|after_or_equal:today',
             'hora' => 'required',
-            'tipo' => 'required|in:Presencial,Teleconsulta' // Ajusta según tus valores ENUM en la BD
+            'tipo' => 'required|in:presencial,teleconsulta' // Valores en el formulario
         ]);
 
         // 2. Combinar fecha y hora para crear el datetime

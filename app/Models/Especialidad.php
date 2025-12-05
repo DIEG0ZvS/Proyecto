@@ -9,7 +9,6 @@ class Especialidad extends Model
 {
     use HasFactory;
 
-    // Forzar el nombre correcto de la tabla (plural irregular en español)
     protected $table = 'especialidades';
 
     protected $fillable = ['nombre', 'descripcion'];

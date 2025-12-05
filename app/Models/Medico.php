@@ -24,10 +24,8 @@ class Medico extends Model
         return $this->hasMany(Horario::class, 'medico_id');
     }
 
-    // AÑADE ESTA RELACIÓN FALTANTE
     public function especialidad()
     {
-        // Asumiendo que la columna de clave foránea es 'especialidad_id'
         return $this->belongsTo(Especialidad::class, 'especialidad_id');
     }
 }

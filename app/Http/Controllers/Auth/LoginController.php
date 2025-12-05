@@ -46,16 +46,16 @@ class LoginController extends Controller
         }
 
         // Aquí es donde empieza a fallar si la lógica es incorrecta.
-        if ($user->role == 'medico') {
+        if ($user->rol == 'medico') {
             auth()->login($user);
             return redirect()->route('medico.inicio'); // Ruta a /medico/dashboard
-        } elseif ($user->role == 'paciente') {
+        } elseif ($user->rol == 'paciente') {
             auth()->login($user);
             return redirect()->route('paciente.inicio');
-        } elseif ($user->role == 'admin') {
+        } elseif ($user->rol == 'admin') {
             auth()->login($user);
             return redirect()->route('admin.inicio');
-        } elseif ($user->role == 'centro') {
+        } elseif ($user->rol == 'centro') {
             auth()->login($user);
             return redirect()->route('centro.inicio');
         }
@@ -63,6 +63,25 @@ class LoginController extends Controller
         // Caso de seguridad: si tiene un rol desconocido, redirige a home
         auth()->login($user);
         return redirect('/home');
+    }
+
+    /**
+     * Redirección después del login si se usa el trait AuthenticatesUsers.
+     */
+    protected function authenticated(Request $request, $user)
+    {
+        switch ($user->rol) {
+            case 'paciente':
+                return redirect()->route('paciente.inicio');
+            case 'medico':
+                return redirect()->route('medico.inicio');
+            case 'centro':
+                return redirect()->route('centro.inicio');
+            case 'admin':
+                return redirect()->route('admin.inicio');
+            default:
+                return redirect('/home');
+        }
     }
 
 }
