@@ -30,7 +30,6 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    // Redireccion
 
     public function login(Request $request)
     {
@@ -45,10 +44,9 @@ class LoginController extends Controller
             return back()->with('error', 'Credenciales incorrectas');
         }
 
-        // Aquí es donde empieza a fallar si la lógica es incorrecta.
         if ($user->rol == 'medico') {
             auth()->login($user);
-            return redirect()->route('medico.inicio'); // Ruta a /medico/dashboard
+            return redirect()->route('medico.inicio');
         } elseif ($user->rol == 'paciente') {
             auth()->login($user);
             return redirect()->route('paciente.inicio');
@@ -60,14 +58,10 @@ class LoginController extends Controller
             return redirect()->route('centro.inicio');
         }
 
-        // Caso de seguridad: si tiene un rol desconocido, redirige a home
         auth()->login($user);
         return redirect('/home');
     }
 
-    /**
-     * Redirección después del login si se usa el trait AuthenticatesUsers.
-     */
     protected function authenticated(Request $request, $user)
     {
         switch ($user->rol) {

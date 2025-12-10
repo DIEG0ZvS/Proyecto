@@ -56,4 +56,10 @@ class User extends Authenticatable
     {
         return $this->hasOne(Paciente::class);
     }
+
+    public function centro()
+    {
+        // Asumiendo que la tabla 'centros' tiene una clave foránea 'user_id'
+        return $this->hasOne(Centro::class, 'user_id'); 
+    }
 }

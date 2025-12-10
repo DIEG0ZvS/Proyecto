@@ -2,39 +2,40 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Medico;
+use App\Models\Paciente;
+use App\Models\Cita;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
+    /**
+     * Muestra el dashboard del administrador con datos dinámicos de la BD.
+     */
     public function index()
     {
-        $usuarios = [
-            [
-                'nombre' => 'Diego Paciente',
-                'email'  => 'paciente@example.com',
-                'rol'    => 'paciente',
-                'estado' => 'Activo',
-            ],
-            [
-                'nombre' => 'Yuleymir Médico',
-                'email'  => 'medico@example.com',
-                'rol'    => 'medico',
-                'estado' => 'Activo',
-            ],
-            [
-                'nombre' => 'Centro Huánuco',
-                'email'  => 'centro@example.com',
-                'rol'    => 'centro',
-                'estado' => 'Activo',
-            ],
-            [
-                'nombre' => 'Admin General',
-                'email'  => 'admin@example.com',
-                'rol'    => 'admin',
-                'estado' => 'Activo',
-            ],
-        ];
+        $totalUsuarios = User::count();
+        $totalMedicos = User::where('rol', 'medico')->count();
+        $totalPacientes = User::where('rol', 'paciente')->count();
+        $totalCentros = User::where('rol', 'centro')->count();
+        
+        $citasHoy = Cita::whereDate('fecha_hora', today())->count();
+        $citasPendientes = Cita::where('estado', 'pendiente')->count();
 
-        return view('admin.inicio', compact('usuarios'));
+        $medicos = Medico::with('user', 'especialidad', 'centroSalud')->get();
+        
+        $pacientes = Paciente::with('user')->get();
+
+        return view('admin.inicio', compact(
+            'totalUsuarios', 
+            'totalMedicos', 
+            'totalPacientes', 
+            'totalCentros', 
+            'citasHoy', 
+            'citasPendientes', 
+            'medicos', 
+            'pacientes'
+        ));
     }
 }

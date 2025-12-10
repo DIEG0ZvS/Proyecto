@@ -2,79 +2,100 @@
 
 @section('content')
 <div class="container">
-    <div class="mb-4">
-        <h2 class="fw-bold mb-1">Panel de Administrador</h2>
-        <p class="text-muted mb-0">
-            Bienvenido, {{ auth()->user()->name }} ({{ auth()->user()->rol }})
-        </p>
-    </div>
+    <h2 class="fw-bold mb-4">Panel de Administración Central</h2>
 
-   
-    <div class="card shadow-sm border-0 mb-4" style="border-radius: 14px;">
-        <div class="card-header fw-bold text-white"
-             style="background-color: #96A78D; border-radius: 14px 14px 0 0;">
-            Filtro de usuarios
+    {{-- Resumen de Estadísticas --}}
+    <div class="row g-3 mb-5">
+        <div class="col-md-3">
+            <div class="card p-3 shadow-sm bg-primary text-white">
+                <h5 class="card-title">Usuarios Totales</h5>
+                <p class="fs-4">{{ $totalUsuarios ?? 0 }}</p>
+            </div>
         </div>
-        <div class="card-body" style="background-color: #FFFFFF;">
-            <form class="row g-3">
-                <div class="col-md-4">
-                    <label class="form-label fw-semibold">Rol</label>
-                    <select class="form-select">
-                        <option value="">Todos</option>
-                        <option value="paciente">Paciente</option>
-                        <option value="medico">Médico</option>
-                        <option value="centro">Centro de salud</option>
-                        <option value="admin">Administrador</option>
-                    </select>
-                </div>
-                <div class="col-md-4">
-                    <label class="form-label fw-semibold">Estado</label>
-                    <select class="form-select">
-                        <option value="">Todos</option>
-                        <option value="Activo">Activo</option>
-                        <option value="Inactivo">Inactivo</option>
-                    </select>
-                </div>
-                <div class="col-md-4 d-flex align-items-end">
-                    <button type="button" class="btn w-100 fw-bold text-white"
-                            style="background-color: #96A78D; border-color: #96A78D;">
-                        Aplicar filtro
-                    </button>
-                </div>
-            </form>
+        <div class="col-md-3">
+            <div class="card p-3 shadow-sm bg-success text-white">
+                <h5 class="card-title">Médicos Registrados</h5>
+                <p class="fs-4">{{ $totalMedicos ?? 0 }}</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card p-3 shadow-sm bg-info text-dark">
+                <h5 class="card-title">Pacientes Registrados</h5>
+                <p class="fs-4">{{ $totalPacientes ?? 0 }}</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card p-3 shadow-sm bg-warning text-dark">
+                <h5 class="card-title">Citas Pendientes</h5>
+                <p class="fs-4">{{ $citasPendientes ?? 0 }}</p>
+            </div>
         </div>
     </div>
 
-    {{-- TABLA: Usuarios --}}
-    <div class="card shadow-sm border-0" style="border-radius: 14px;">
-        <div class="card-header fw-bold"
-             style="background-color: #B6CEB4; border-radius: 14px 14px 0 0;">
-            Usuarios registrados
-        </div>
+    {{-- Gestión de Médicos --}}
+    <div class="card shadow-sm mb-5">
+        <div class="card-header fw-bold bg-secondary text-white">Gestión de Médicos ({{ $medicos->count() }})</div>
         <div class="card-body p-0">
-            <table class="table mb-0 align-middle">
-                <thead style="background-color: #D9E9CF;">
+            <table class="table table-striped mb-0">
+                <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Nombre</th>
-                        <th>Correo</th>
-                        <th>Rol</th>
-                        <th>Estado</th>
+                        <th>Especialidad</th>
+                        <th>Centro Asignado</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($usuarios as $usuario)
+                    @forelse($medicos as $medico)
                         <tr>
-                            <td>{{ $usuario['nombre'] }}</td>
-                            <td>{{ $usuario['email'] }}</td>
-                            <td>{{ $usuario['rol'] }}</td>
+                            <td>{{ $medico->id }}</td>
+                            <td>{{ $medico->user->name ?? 'N/A' }}</td>
+                            <td>{{ $medico->especialidad->nombre ?? 'Sin especificar' }}</td>
+                            <td>{{ $medico->centroSalud->nombre ?? 'Sin Asignar' }}</td>
                             <td>
-                                <span class="badge rounded-pill text-dark"
-                                      style="background-color: #D9E9CF;">
-                                    {{ $usuario['estado'] }}
-                                </span>
+                                <button class="btn btn-sm btn-info text-white">Ver</button>
+                                <button class="btn btn-sm btn-danger">Eliminar</button>
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="5" class="text-center text-muted">No hay médicos registrados.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {{-- Gestión de Pacientes --}}
+    <div class="card shadow-sm">
+        <div class="card-header fw-bold bg-light">Gestión de Pacientes ({{ $pacientes->count() }})</div>
+        <div class="card-body p-0">
+            <table class="table table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($pacientes as $paciente)
+                        <tr>
+                            <td>{{ $paciente->id }}</td>
+                            <td>{{ $paciente->user->name ?? 'N/A' }}</td>
+                            <td>{{ $paciente->user->email ?? 'N/A' }}</td>
+                            <td>
+                                <button class="btn btn-sm btn-info text-white">Ver Historial</button>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="5" class="text-center text-muted">No hay pacientes registrados.</td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>

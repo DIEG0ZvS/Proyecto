@@ -17,4 +17,9 @@ class Paciente extends Model
     {
         return $this->hasMany(Cita::class, 'paciente_id');
     }
+
+    public function centroSalud()
+    {
+        return $this->belongsTo(Centro::class, 'centro_salud_id'); 
+    }
 }
