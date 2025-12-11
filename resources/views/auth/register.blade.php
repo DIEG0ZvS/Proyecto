@@ -38,7 +38,10 @@
                     {{-- Password --}}
                     <div class="mb-3">
                         <label class="form-label fw-semibold">Contraseña</label>
-                        <input type="password" name="password" class="form-control" required>
+                        <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" required>
+                        @error('password')
+                            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                        @enderror
                     </div>
 
                     {{-- Confirmación --}}

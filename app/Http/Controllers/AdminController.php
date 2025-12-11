@@ -76,15 +76,14 @@ class AdminController extends Controller
     public function storeCentro(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8',
             'nombre_centro' => 'required|string|max:255',
             'direccion' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8',
         ]);
 
         $user = User::create([
-            'name' => $request->name, 
+            'name' => $request->nombre_centro, 
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'rol' => 'centro',
