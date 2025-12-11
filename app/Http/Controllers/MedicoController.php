@@ -53,7 +53,7 @@ class MedicoController extends Controller
             'hora_fin' => $request->input('fin'),
         ]);
 
-        return back()->with('success', 'Horario registrado correctamente.');
+        return back()->with('Horario registrado correctamente.');
     }
 
     public function teleconsulta($id)
@@ -94,7 +94,7 @@ class MedicoController extends Controller
         $cita->estado = 'completado';
         $cita->save();
 
-        return redirect()->route('medico.historial')->with('success', 'Diagnóstico guardado y consulta finalizada.');
+        return redirect()->route('medico.historial')->with('Diagnóstico guardado y consulta finalizada.');
     }
 
     public function historial()

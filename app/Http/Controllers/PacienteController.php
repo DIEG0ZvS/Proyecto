@@ -50,6 +50,6 @@ class PacienteController extends Controller
             'estado' => 'pendiente',
         ]);
 
-        return back()->with('success', 'Su cita ha sido solicitada correctamente.');
+        return back()->with('Su cita ha sido solicitada correctamente.');
     }
 }

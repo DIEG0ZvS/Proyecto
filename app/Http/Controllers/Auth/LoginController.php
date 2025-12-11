@@ -53,9 +53,6 @@ class LoginController extends Controller
         } elseif ($user->rol == 'admin') {
             auth()->login($user);
             return redirect()->route('admin.inicio');
-        } elseif ($user->rol == 'centro') {
-            auth()->login($user);
-            return redirect()->route('centro.inicio');
         }
 
         auth()->login($user);
@@ -69,8 +66,6 @@ class LoginController extends Controller
                 return redirect()->route('paciente.inicio');
             case 'medico':
                 return redirect()->route('medico.inicio');
-            case 'centro':
-                return redirect()->route('centro.inicio');
             case 'admin':
                 return redirect()->route('admin.inicio');
             default:

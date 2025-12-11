@@ -57,9 +57,9 @@ class User extends Authenticatable
         return $this->hasOne(Paciente::class);
     }
 
+    // RELACIÓN AÑADIDA: Un usuario con rol 'centro' administra un centro de salud.
     public function centro()
     {
-        // Asumiendo que la tabla 'centros' tiene una clave foránea 'user_id'
-        return $this->hasOne(Centro::class, 'user_id'); 
+        return $this->hasOne(Centro::class, 'user_id');
     }
 }

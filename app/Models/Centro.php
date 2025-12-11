@@ -10,11 +10,12 @@ class Centro extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id'); // 1:1 con el admin
     }
-
+    
     public function medicos()
     {
+        // Un centro tiene muchos médicos (FK: centro_salud_id en tabla medicos)
         return $this->hasMany(Medico::class, 'centro_salud_id'); 
     }
 }
