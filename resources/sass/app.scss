@@ -1,0 +1,30 @@
+// ======================================================
+// BRANDING - Citas Médicas Rurales
+// ======================================================
+
+// Colores de la paleta
+$primary: #96A78D;    
+$secondary: #B6CEB4;   
+$accent: #D9E9CF;       
+$background: #F0F0F0;   
+
+// Fondo general
+$body-bg: $background;
+$body-color: #1E1E1E;
+
+// NAVBAR
+$navbar-dark-bg: $primary;
+$navbar-dark-color: #ffffff;
+$navbar-dark-hover-color: $accent;
+
+// BOTONES
+$btn-primary-bg: $primary;
+$btn-primary-border-color: $primary;
+$btn-primary-hover-bg: $secondary;
+
+// Tarjetas y formularios
+$card-bg: #FFFFFF;
+$card-border-color: $secondary;
+
+// Importación Bootstrap
+@import "bootstrap";

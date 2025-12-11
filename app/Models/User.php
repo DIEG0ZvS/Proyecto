@@ -21,6 +21,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+<<<<<<< HEAD
+=======
+        'rol',
+>>>>>>> diego
     ];
 
     /**
@@ -45,4 +49,23 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+<<<<<<< HEAD
+=======
+
+    public function medico()
+    {
+        return $this->hasOne(Medico::class, 'user_id');
+    }
+
+    public function paciente()
+    {
+        return $this->hasOne(Paciente::class);
+    }
+
+    // RELACIÓN AÑADIDA: Un usuario con rol 'centro' administra un centro de salud.
+    public function centro()
+    {
+        return $this->hasOne(Centro::class, 'user_id');
+    }
+>>>>>>> diego
 }
