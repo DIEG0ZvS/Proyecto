@@ -11,8 +11,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('centros', function (Blueprint $table) {
-            // Añade la columna `user_id` como nullable para evitar errores
-            // si ya existen registros en la tabla `centros`.
             $table->foreignId('user_id')->nullable()->constrained()->after('id');
         });
     }

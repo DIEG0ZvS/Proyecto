@@ -31,10 +31,7 @@
                     <div class="mb-3">
                         <label class="form-label fw-semibold">Rol</label>
                         <select name="rol" class="form-select" required>
-                            <option value="">Seleccione…</option>
                             <option value="paciente">Paciente</option>
-                            <option value="medico">Médico</option>
-                            <option value="centro">Centro de salud</option>
                         </select>
                     </div>
 

@@ -78,7 +78,6 @@
                         <th>ID</th>
                         <th>Nombre</th>
                         <th>Email</th>
-                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -87,9 +86,6 @@
                             <td>{{ $paciente->id }}</td>
                             <td>{{ $paciente->user->name ?? 'N/A' }}</td>
                             <td>{{ $paciente->user->email ?? 'N/A' }}</td>
-                            <td>
-                                <button class="btn btn-sm btn-info text-white">Ver Historial</button>
-                            </td>
                         </tr>
                     @empty
                         <tr>
