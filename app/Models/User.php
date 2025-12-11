@@ -62,7 +62,6 @@ class User extends Authenticatable
         return $this->hasOne(Paciente::class);
     }
 
-    // RELACIÓN AÑADIDA: Un usuario con rol 'centro' administra un centro de salud.
     public function centro()
     {
         return $this->hasOne(Centro::class, 'user_id');

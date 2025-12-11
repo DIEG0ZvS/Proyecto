@@ -50,14 +50,14 @@ class AdminController extends Controller
             'centro_salud_id' => 'nullable|exists:centros,id',
         ]);
 
-        $user = User::crear([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'rol' => 'medico',
         ]);
 
-        Medico::crear([
+        Medico::create([
             'user_id' => $user->id,
             'num_colegiatura' => $request->num_colegiatura,
             'especialidad_id' => $request->especialidad_id,
@@ -65,7 +65,7 @@ class AdminController extends Controller
             'telefono' => $request->telefono,
         ]);
 
-        return redirect()->route('admin.inicio')->with('Médico registrado exitosamente.');
+        return redirect()->route('admin.inicio')->with('success', 'Médico registrado exitosamente.');
     }
 
     public function crearCentro()
@@ -83,19 +83,19 @@ class AdminController extends Controller
             'direccion' => 'required|string|max:255',
         ]);
 
-        $user = User::crear([
+        $user = User::create([
             'name' => $request->name, 
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'rol' => 'centro',
         ]);
 
-        Centro::crear([
+        Centro::create([
             'user_id' => $user->id,
             'nombre' => $request->nombre_centro,
             'direccion' => $request->direccion,
         ]);
 
-        return redirect()->route('admin.inicio')->with('Centro de Salud registrado exitosamente.');
+        return redirect()->route('admin.inicio')->with('success', 'Centro de Salud registrado exitosamente.');
     }
 }
